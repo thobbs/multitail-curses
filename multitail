@@ -1,0 +1,15 @@
+#!/usr/bin/python
+
+import sys
+import curses
+import multitail
+
+def main(stdscr, *args, **kwargs):
+    curses.curs_set(0)
+    multitail.tail_files(sys.argv[1:])
+
+if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print >>sys.stderr, "Usage: multitail FILE [FILE2] [FILE3] [FILE4]"
+        sys.exit(1)
+    curses.wrapper(main)
