@@ -8,7 +8,7 @@ def read(fname):
 
 
 setup(
-    name = "multitail",
+    name = "multitail-curses",
     version = multitail.__version__,
     author = "Tyler Hobbs",
     author_email = "tylerlhobbs@gmail.com",
@@ -16,8 +16,8 @@ setup(
                    "files simultaneously."),
     license = "MIT",
     keywords = "tail script multitail",
-    url = "http://github.com/thobbs/multitail",
-    download_url = 'http://github.com/downloads/thobbs/multitail/multitail-%s.tar.gz' % (multitail.__version__,),
+    url = "http://github.com/thobbs/multitail-curses",
+    download_url = 'http://github.com/downloads/thobbs/multitail-curses/multitail-curses-%s.tar.gz' % (multitail.__version__,),
     packages=[],
     py_modules=['multitail'],
     scripts=['multitail'],

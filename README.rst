@@ -1,17 +1,17 @@
-multitail
-=========
+multitail-curses
+================
 A curses-based utility script for tailing multiple files simultaneously.
 
 I made this script for quickly tailing several log files in the same terminal
 window.
 
-.. image:: https://raw.github.com/thobbs/multitail/master/screenshot.png
+.. image:: https://raw.github.com/thobbs/multitail-curses/master/screenshot.png
 
 Installation
 ------------
 The easiest way to install this is through pip or easy_install::
 
-    pip install -U multitail
+    pip install -U multitail-curses
 
 You can also install from source by running::
 
