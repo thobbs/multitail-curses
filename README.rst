@@ -5,6 +5,8 @@ A curses-based utility script for tailing multiple files simultaneously.
 I made this script for quickly tailing several log files in the same terminal
 window.
 
+![Screenshot](http://raw.github.com/thobbs/multitail/master/screenshot.png)
+
 Installation
 ------------
 The easiest way to install this is through pip or easy_install::
