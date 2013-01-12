@@ -60,7 +60,7 @@ def _seek_to_n_lines_from_end(f, numlines=10):
     """
     buf = ""
     buf_pos = 0
-    f.seek(0, 2)
+    f.seek(0, 2)  # seek to the end of the file
     line_count = 0
 
     while line_count < numlines:
@@ -74,7 +74,7 @@ def _seek_to_n_lines_from_end(f, numlines=10):
             else:
                 toread = min(1024, file_pos)
                 f.seek(-toread, 1)
-                buf = f.read(toread) + buf
+                buf = f.read(toread) + buf[:buf_pos]
                 f.seek(-toread, 1)
                 buf_pos = len(buf) - 1
         else:
