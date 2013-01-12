@@ -4,7 +4,11 @@ from setuptools import setup
 import multitail
 
 def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+    f = os.path.join(os.path.dirname(__file__), fname)
+    if os.path.exists(f):
+        return open(f).read()
+    else:
+        return ""
 
 
 setup(
