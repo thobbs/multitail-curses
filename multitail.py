@@ -1,9 +1,11 @@
 import curses
 import fcntl
+import os
 import struct
 import termios
 import threading
 import time
+
 
 __version_info__ = (1, 0, 2)
 __version__ = '.'.join(map(str, __version_info__))
@@ -37,7 +39,7 @@ def tail_files(filenames):
     for filename, window in zip(filenames, windows):
         window.border()
         thread = threading.Thread(
-                target=_tail_in_window, args=(filename, window, lock))
+            target=_tail_in_window, args=(filename, window, lock))
         thread.daemon = True
         threads.add(thread)
         thread.start()
@@ -92,14 +94,30 @@ def _tail(filename, starting_lines=10):
     the last `starting_lines` lines will be read from the end.
     """
     f = open(filename)
+    current_size = os.stat(filename).st_size
     _seek_to_n_lines_from_end(f, starting_lines)
     while True:
+        new_size = os.stat(filename).st_size
+
         where = f.tell()
         line = f.readline()
         if not line:
-            time.sleep(0.25)
-            f.seek(where)
+            if new_size < current_size:
+                # the file was probably truncated, reopen
+                f = open(filename)
+                current_size = new_size
+                dashes = "-" * 20
+                yield "\n"
+                yield "\n"
+                yield "%s file was truncated %s" % (dashes, dashes)
+                yield "\n"
+                yield "\n"
+                time.sleep(0.25)
+            else:
+                time.sleep(0.25)
+                f.seek(where)
         else:
+            current_size = new_size
             yield line
 
 
@@ -146,7 +164,6 @@ def _tail_in_window(filename, window, lock):
                     return
 
 def _terminal_size():
-    h, w, hp, wp = struct.unpack('HHHH',
-        fcntl.ioctl(0, termios.TIOCGWINSZ,
-        struct.pack('HHHH', 0, 0, 0, 0)))
+    raw = fcntl.ioctl(0, termios.TIOCGWINSZ, struct.pack('HHHH', 0, 0, 0, 0))
+    h, w, hp, wp = struct.unpack('HHHH', raw)
     return w, h
