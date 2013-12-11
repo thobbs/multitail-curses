@@ -7,7 +7,7 @@ import threading
 import time
 
 
-__version_info__ = (1, 0, 3)
+__version_info__ = (1, 0, 4)
 __version__ = '.'.join(map(str, __version_info__))
 
 
@@ -25,9 +25,9 @@ def tail_files(filenames):
         windows.append(curses.newwin(rows, half_columns, 0, 0))
         windows.append(curses.newwin(rows, half_columns, 0, half_columns))
     elif len(filenames) == 3:
-        windows.append(curses.newwin(rows, columns / 3, 0, 0))
-        windows.append(curses.newwin(rows, columns / 3, 0, columns / 3))
-        windows.append(curses.newwin(rows, columns / 3, 0, 2 * columns / 3))
+        windows.append(curses.newwin(rows / 2, half_columns, 0, 0))
+        windows.append(curses.newwin(rows / 2, half_columns, 0, half_columns))
+        windows.append(curses.newwin(rows / 2, half_columns, rows / 2, 0))
     elif len(filenames) == 4:
         windows.append(curses.newwin(rows / 2, half_columns, 0, 0))
         windows.append(curses.newwin(rows / 2, half_columns, 0, half_columns))
